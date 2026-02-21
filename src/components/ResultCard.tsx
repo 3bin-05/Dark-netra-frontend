@@ -19,14 +19,14 @@ const ResultCard = ({ result }: ResultCardProps) => {
     {
       icon: Globe,
       label: "VirusTotal",
-      value: `${result.vt_score}% risk`,
-      danger: result.vt_score > 50,
+      value: result.virustotal,
+      danger: result.virustotal.toLowerCase().includes("malicious") || result.virustotal.toLowerCase().includes("detected"),
     },
     {
       icon: ShieldCheck,
       label: "Google Safe Browsing",
-      value: result.google_safe ? "Safe" : "Unsafe",
-      danger: !result.google_safe,
+      value: result.google_safe,
+      danger: result.google_safe.toLowerCase().includes("unsafe") || result.google_safe.toLowerCase().includes("detected"),
     },
   ];
 
@@ -45,7 +45,7 @@ const ResultCard = ({ result }: ResultCardProps) => {
       </div>
 
       <div className="flex justify-center">
-        <RiskMeter score={result.final_score} verdict={result.risk_level} />
+        <RiskMeter score={result.risk_score} verdict={result.verdict} />
       </div>
 
       <div className="grid gap-3">
@@ -57,22 +57,14 @@ const ResultCard = ({ result }: ResultCardProps) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.8 + i * 0.15 }}
           >
-            <item.icon
-              className={`w-5 h-5 shrink-0 ${item.danger ? "text-destructive" : "text-success"}`}
-            />
+            <item.icon className={`w-5 h-5 shrink-0 ${item.danger ? "text-destructive" : "text-success"}`} />
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                {item.label}
-              </p>
-              <p
-                className={`text-sm font-semibold ${item.danger ? "text-destructive" : "text-foreground"}`}
-              >
+              <p className="text-xs text-muted-foreground uppercase tracking-wider">{item.label}</p>
+              <p className={`text-sm font-semibold ${item.danger ? "text-destructive" : "text-foreground"}`}>
                 {item.value}
               </p>
               {item.sub && (
-                <p className="text-xs text-muted-foreground font-mono">
-                  {item.sub}
-                </p>
+                <p className="text-xs text-muted-foreground font-mono">{item.sub}</p>
               )}
             </div>
           </motion.div>
