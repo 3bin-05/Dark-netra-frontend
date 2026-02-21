@@ -5,12 +5,13 @@ import { motion } from "framer-motion";
 import ResultCard from "./ResultCard";
 
 export interface ScanResult {
-  ml_prediction: number;
-  ml_probability: number;
-  virustotal: string;
-  google_safe: string;
-  risk_score: number;
-  verdict: string;
+  ml_prediction: number
+  ml_probability: number
+  ml_score: number
+  google_safe: boolean
+  vt_score: number
+  final_score: number
+  risk_level: string
 }
 
 const ScanCard = () => {
