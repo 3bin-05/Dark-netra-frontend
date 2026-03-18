@@ -51,7 +51,7 @@ const RiskMeter = ({ score, verdict }: RiskMeterProps) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            {score}
+            {score.toFixed(2)}
           </motion.span>
           <span className="text-xs text-muted-foreground uppercase tracking-widest">Risk</span>
         </div>
@@ -62,7 +62,7 @@ const RiskMeter = ({ score, verdict }: RiskMeterProps) => {
 };
 
 const VerdictBadge = ({ verdict }: { verdict: string }) => {
-  const lower = verdict.toLowerCase();
+  const lower = verdict?.toLowerCase() || "unknown";
   let classes = "px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wider ";
 
   if (lower === "safe") {
