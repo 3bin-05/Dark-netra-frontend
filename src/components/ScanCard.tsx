@@ -13,6 +13,7 @@ export interface ScanResult {
   ml_probability: number;
   virustotal: string;
   google_safe: string;
+  reasons?: string[];
 }
 
 const ScanCard = () => {
@@ -45,6 +46,7 @@ const ScanCard = () => {
           data.details?.virustotal_score > 0 ? "Malicious" : "Clean",
         google_safe:
           data.details?.google_flag === 1 ? "Unsafe" : "Safe",
+        reasons: data.reasons || [],
       };
 
       setResult(formatted);
